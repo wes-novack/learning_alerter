@@ -6,6 +6,7 @@ def main():
     headers = {'user-agent': 'Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/68.0.3440.75 Mobile Safari/537.36'}
     product_id = get_product_id(headers)
     title, image = get_title_image(product_id, headers)
+    return title, image
 
 
 def get_product_id(headers):
@@ -32,7 +33,6 @@ def get_title_image(product_id, headers):
     image = details_dict['coverImage']
     print(title, image)
     return title, image
-
 
 
 if __name__ == '__main__':
