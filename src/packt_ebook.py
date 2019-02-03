@@ -22,7 +22,7 @@ def get_title_image(product_id, headers):
     response = requests.get(url, headers)
     details_dict = json.loads(response)
     title = details_dict['title']
-    image = details_dict['image']
+    image = details_dict['coverImage']
 
 
 
