@@ -1,5 +1,5 @@
-import json, datetime, re
-import requests, slackclient
+import json, datetime
+import requests
 
 
 def main():
