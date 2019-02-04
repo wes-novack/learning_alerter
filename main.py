@@ -10,8 +10,7 @@ def main(args):
     if args.slacktoken:
         token = args.slacktoken
         channel = args.slackchannel
-        message = title + image
-        slack.post.main(token, message, channel)
+        slack.post.main(token, image, title, channel)
 
 
 def get_args():
