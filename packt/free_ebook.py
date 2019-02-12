@@ -1,4 +1,5 @@
-import json, datetime
+import json
+import datetime
 import requests
 
 
@@ -13,15 +14,10 @@ def get_product_id(headers):
     now = datetime.date.today()
     today = now.isoformat()
     tomorrow = str(now + datetime.timedelta(days=1))
-    print("tomorrow: "+tomorrow)
     url = 'https://services.packtpub.com/free-learning-v1/offers?dateFrom='+today+'T00:00:00.000Z&dateTo='+tomorrow+'T00:00:00.000Z'
-    print("url: "+url)
     response = requests.get(url, headers)
-    print(response)
     product_dict = json.loads(response.text)
-    print(product_dict)
     product_id = product_dict['data'][0]['productId']
-    print("product_id: "+str(product_id))
     return product_id
 
 
@@ -31,7 +27,6 @@ def get_title_image(product_id, headers):
     details_dict = json.loads(response.text)
     title = details_dict['title']
     image = details_dict['coverImage']
-    print(title, image)
     return title, image
 
 
