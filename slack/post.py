@@ -20,7 +20,7 @@ def post_to_channel(client, image, title, channel):
                     text="Free title of the day: "+title,
                     attachments=[{'fallback': 'Packt free title of the day',
                                   'image_url': image,
-                                  'title': 'Download here: '+title,
+                                  'title': 'Claim here: '+title,
                                   'title_link': 'https://www.packtpub.com/packt/offers/free-learning',
                                   'text': 'Only available for 24 hours'}]
     )
