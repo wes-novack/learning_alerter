@@ -35,7 +35,7 @@ def get_title_image(product_id, headers):
     logging.info("Packt-CDN response: {}".format(response.text))
     details_dict = json.loads(response.text)
     title = details_dict['title']
-    image = details_dict['coverImage']
+    image = details_dict['coverImage'].replace(' ', '%20')
     logging.info("title: {}".format(title))
     logging.info("image: {}".format(image))
     return title, image
