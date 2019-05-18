@@ -22,7 +22,7 @@ def post_to_channel(client, image, title, channel):
                                   'image_url': image,
                                   'title': 'Claim here: '+title,
                                   'title_link': 'https://www.packtpub.com/packt/offers/free-learning',
-                                  'text': 'Only available for 24 hours'}]
+                                  'text': 'Available for a limited time'}]
     )
 
 
