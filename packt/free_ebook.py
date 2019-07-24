@@ -1,12 +1,15 @@
 import datetime
 import json
 import logging
+import logging.handlers
 import requests
 
 
 def setup_logging():
-    logging.basicConfig(level=logging.INFO, filename='learning_alerter.log', filemode='w', format='%(name)s - %(levelname)s - %(message)s')    
-
+    LOG_FILENAME = 'learning_alerter.log'
+    logging.basicConfig(level=logging.INFO, filename=LOG_FILENAME, format='%(name)s - %(levelname)s - %(message)s')    
+    handler = logging.handlers.RotatingFileHandler(LOG_FILENAME, maxBytes=524288000, backupCount=3)
+    logging.getLogger('').addHandler(handler)
 
 def main():
     setup_logging()
