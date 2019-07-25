@@ -50,7 +50,7 @@ def get_image_response(image):
     r = requests.head(image)
     if r.status code == 200:
         return image
-    else
+    else:
         return backup_image
 
 
