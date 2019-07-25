@@ -48,7 +48,7 @@ def get_title_image(product_id, headers):
 def check_image_availability(image):
     backup_image = 'https://www.packtpub.com/media/wysiwyg/homepage_split_promo/freelearn_split_right.png'
     r = requests.head(image)
-    if r.status code == 200:
+    if r.status_code == 200:
         return image
     else:
         return backup_image
