@@ -41,11 +41,11 @@ def get_title_image(product_id, headers):
     image = details_dict['coverImage'].replace(' ', '%20')
     logging.info("title: {}".format(title))
     logging.info("image: {}".format(image))
-    image = get_image_response(image)
+    image = check_image_availability(image)
     return title, image
 
 
-def get_image_response(image):
+def check_image_availability(image):
     backup_image = 'https://www.packtpub.com/media/wysiwyg/homepage_split_promo/freelearn_split_right.png'
     r = requests.head(image)
     if r.status code == 200:
