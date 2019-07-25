@@ -1,11 +1,11 @@
 import configargparse
-import packt.free_ebook
+import packt.free_title
 import slack.post
 
 
 def main(args):
     if args.packt:
-        title, image = packt.free_ebook.main()
+        title, image = packt.free_title.main()
     if args.slacktoken:
         token = args.slacktoken
         channel = args.slackchannel
