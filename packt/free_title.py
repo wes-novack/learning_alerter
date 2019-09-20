@@ -3,6 +3,7 @@ import json
 import logging
 import logging.handlers
 import requests
+import re
 
 
 def setup_logging():
@@ -15,15 +16,16 @@ def main():
     setup_logging()
     headers = {'user-agent': 'Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/68.0.3440.75 Mobile Safari/537.36'}
     product_id = get_product_id(headers)
-    title, image = get_title_image(product_id, headers)
+    title, image = get_cdn_data(product_id, headers)
     return title, image
 
 
 def get_product_id(headers):
-    now = datetime.date.today()
-    today = now.isoformat()
-    tomorrow = str(now + datetime.timedelta(days=1))
-    url = 'https://services.packtpub.com/free-learning-v1/offers?dateFrom='+today+'T00:00:00.000Z&dateTo='+tomorrow+'T00:00:00.000Z'
+    now = datetime.datetime.utcnow()
+    today = now.date()
+    logging.info("now: {} today {}".format(now, today))
+    tomorrow = str(today + datetime.timedelta(days=1))
+    url = 'https://services.packtpub.com/free-learning-v1/offers?dateFrom='+str(today)+'T00:00:00.000Z&dateTo='+tomorrow+'T00:00:00.000Z'
     response = requests.get(url, headers)
     logging.info("services.packtpub.com response: {}".format(response.text))
     product_dict = json.loads(response.text)
@@ -32,26 +34,43 @@ def get_product_id(headers):
     return product_id
 
 
-def get_title_image(product_id, headers):
+def get_cdn_data(product_id, headers):
     url = 'https://static.packt-cdn.com/products/'+product_id+'/summary'
     response = requests.get(url, headers)
     logging.info("Packt-CDN response: {}".format(response.text))
     details_dict = json.loads(response.text)
     title = details_dict['title']
     image = details_dict['coverImage'].replace(' ', '%20')
+    shop_url = details_dict['shopUrl']
     logging.info("title: {}".format(title))
     logging.info("image: {}".format(image))
-    image = check_image_availability(image)
+    image = check_image_availability(image, shop_url, headers)
     return title, image
 
 
-def check_image_availability(image):
+def check_image_availability(image, shop_url, headers):
     backup_image = 'https://www.packtpub.com/media/wysiwyg/homepage_split_promo/freelearn_split_right.png'
-    r = requests.head(image)
-    if r.status_code == 200:
+    if image_available(image):
         return image
     else:
-        return backup_image
+        url = 'https://www.packtpub.com'+shop_url
+        logging.info(url)
+        response = requests.get(url, headers)
+        match = re.search('(?<=og\:image" content=").*(?=\")', str(response.text))
+        shop_image = match.group(0)
+        logging.info("shop_image: {}".format(shop_image))
+        if image_available(shop_image):
+            return shop_image
+        else:
+            return backup_image
+
+
+def image_available(image):
+    r = requests.head(image)
+    if r.status_code == 200:
+        return True
+    else:
+        return False
 
 
 if __name__ == '__main__':
