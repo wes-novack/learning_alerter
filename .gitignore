@@ -5,3 +5,4 @@ __pycache__/
 *.swp
 *.log
 .deploy
+.pytest_cache/
