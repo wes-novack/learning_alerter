@@ -12,7 +12,7 @@ def main(args):
             slack.post.main(token, image, title, channel)
         else:
             print("No args.slacktoken or args.slackchannel found.")
-            print("Title is: {0}\nImage URL is: {1}".format(title, image))
+            print("Title is: {}\nImage URL is: {}".format(title, image))
 
 def get_args():
     config = configargparse.ArgParser()
