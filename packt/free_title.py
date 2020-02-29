@@ -5,12 +5,17 @@ import logging.handlers
 import requests
 import re
 
+LOG_FILENAME = 'learning_alerter.log'
+MAX_BYTES = 524288000
+BACKUP_COUNT = 3
+
 
 def setup_logging():
-    LOG_FILENAME = 'learning_alerter.log'
     logging.basicConfig(level=logging.INFO, filename=LOG_FILENAME, format='%(name)s - %(levelname)s - %(message)s')    
-    handler = logging.handlers.RotatingFileHandler(LOG_FILENAME, maxBytes=524288000, backupCount=3)
+    handler = logging.handlers.RotatingFileHandler(LOG_FILENAME, maxBytes=MAX_BYTES, backupCount=BACKUP_COUNT)
     logging.getLogger('').addHandler(handler)
+    return logging.getLogger()
+
 
 def main():
     setup_logging()
@@ -18,6 +23,13 @@ def main():
     product_id = get_product_id(headers)
     title, image = get_cdn_data(product_id, headers)
     return title, image
+
+
+def get_id_from_json(response_text):
+    product_dict = json.loads(response_text)
+    product_id = product_dict['data'][0]['productId']
+    logging.info("product_id: {}".format(product_id))
+    return product_id
 
 
 def get_product_id(headers):
@@ -28,9 +40,7 @@ def get_product_id(headers):
     url = 'https://services.packtpub.com/free-learning-v1/offers?dateFrom='+str(today)+'T00:00:00.000Z&dateTo='+tomorrow+'T00:00:00.000Z'
     response = requests.get(url, headers)
     logging.info("services.packtpub.com response: {}".format(response.text))
-    product_dict = json.loads(response.text)
-    product_id = product_dict['data'][0]['productId']
-    logging.info("product_id: {}".format(product_id))
+    product_id = get_id_from_json(response.text)
     return product_id
 
 
