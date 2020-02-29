@@ -13,5 +13,4 @@ def test_setup_logging():
 
 
 def test_get_id_from_json():
-    response_text = get_product_id_testdata
-    assert packt.get_id_from_json(response_text) == '9781788476195'
+    assert packt.get_id_from_json(get_product_id_testdata) == '9781788476195'
