@@ -14,6 +14,7 @@ def main(args):
             print("No args.slacktoken or args.slackchannel found.")
             print("Title is: {}\nImage URL is: {}".format(title, image))
 
+
 def get_args():
     config = configargparse.ArgParser()
     config.add('--slacktoken')
