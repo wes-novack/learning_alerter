@@ -7,4 +7,4 @@ python main.py --packt --slacktoken 'xoxp-your-super-secret-slack-token' --slack
 
 ## Run tests
 From the root of the repository/project, run:
-python -m pytest
+`python -m pytest`
