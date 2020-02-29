@@ -6,11 +6,13 @@ import slack.post
 def main(args):
     if args.packt:
         title, image = packt.free_title.main()
-    if args.slacktoken:
-        token = args.slacktoken
-        channel = args.slackchannel
-        slack.post.main(token, image, title, channel)
-
+        if args.slacktoken and args.slackchannel:
+            token = args.slacktoken
+            channel = args.slackchannel
+            slack.post.main(token, image, title, channel)
+        else:
+            print("No args.slacktoken or args.slackchannel found.")
+            print("Title is: {0}\nImage URL is: {1}".format(title, image))
 
 def get_args():
     config = configargparse.ArgParser()
