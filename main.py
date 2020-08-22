@@ -4,21 +4,19 @@ import slack.post
 import logging
 import logging.handlers
 
-LOG_FILENAME = 'learning_alerter.log'
-LOG_LEVEL = 'INFO'
 LOG_MAX_BYTES = 524288000
 LOG_BACKUP_COUNT = 3
 
 
-def setup_logging():
-    logging.basicConfig(level=LOG_LEVEL, filename=LOG_FILENAME, format='%(name)s - %(levelname)s - %(message)s')    
-    handler = logging.handlers.RotatingFileHandler(LOG_FILENAME, maxBytes=LOG_MAX_BYTES, backupCount=LOG_BACKUP_COUNT)
+def setup_logging(args):
+    logging.basicConfig(level=args.loglevel, filename=args.logfile, format='%(name)s - %(levelname)s - %(message)s')    
+    handler = logging.handlers.RotatingFileHandler(args.logfile, maxBytes=LOG_MAX_BYTES, backupCount=LOG_BACKUP_COUNT)
     logging.getLogger('root').addHandler(handler)
     return logging.getLogger()
 
 
 def main(args):
-    setup_logging()
+    setup_logging(args)
     if args.packt:
         title, image = packt.free_title.main()
         if args.slacktoken and args.slackchannel:
@@ -35,6 +33,8 @@ def get_args():
     config.add('--slacktoken')
     config.add('--slackchannel')
     config.add('--packt', action='store_true')
+    config.add('--loglevel', default='INFO')
+    config.add('--logfile', default='learning_alerter.log')
     args = config.parse_args()
     return args
 

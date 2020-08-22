@@ -51,14 +51,19 @@ def check_image_availability(image, shop_url, headers):
         return image
     else:
         url = 'https://www.packtpub.com'+shop_url
-        logging.info(url)
+        logging.info("shop_url: {}".format(url))
         response = requests.get(url, headers)
         logging.debug("response: {}".format(response.text))
         match = re.search('(?<=og\:image" content=").*(?=\")', str(response.text))
-        shop_image = match.group(0)
-        logging.info("shop_image: {}".format(shop_image))
-        if image_available(shop_image):
-            return shop_image
+        logging.info("match: {}".format(match))
+        if match:
+            shop_image = match.group(0)
+            logging.info("shop_image: {}".format(shop_image))
+        else:
+            shop_image = None
+        if shop_image:
+            if image_available(shop_image):
+                return shop_image
         else:
             return backup_image
 
