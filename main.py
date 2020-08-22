@@ -8,14 +8,8 @@ LOG_MAX_BYTES = 524288000
 LOG_BACKUP_COUNT = 3
 
 
-def setup_logging(args):
-    logging.basicConfig(level=args.loglevel, filename=args.logfile, format='%(name)s - %(levelname)s - %(message)s')    
-    handler = logging.handlers.RotatingFileHandler(args.logfile, maxBytes=LOG_MAX_BYTES, backupCount=LOG_BACKUP_COUNT)
-    logging.getLogger('root').addHandler(handler)
-    return logging.getLogger()
-
-
-def main(args):
+def main():
+    args = get_args()
     setup_logging(args)
     if args.packt:
         title, image = packt.free_title.main()
@@ -39,6 +33,12 @@ def get_args():
     return args
 
 
+def setup_logging(args):
+    logging.basicConfig(level=args.loglevel, filename=args.logfile, format='%(name)s - %(levelname)s - %(message)s')    
+    handler = logging.handlers.RotatingFileHandler(args.logfile, maxBytes=LOG_MAX_BYTES, backupCount=LOG_BACKUP_COUNT)
+    logging.getLogger('root').addHandler(handler)
+    return logging.getLogger()
+
+
 if __name__ == '__main__':
-    args = get_args()
-    main(args)
+    main()
