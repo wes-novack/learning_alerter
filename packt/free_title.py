@@ -37,16 +37,20 @@ def get_cdn_data(product_id, headers):
     logging.info("Packt-CDN response: {}".format(response.text))
     details_dict = json.loads(response.text)
     title = details_dict['title']
-    image = details_dict['coverImage'].replace(' ', '%20')
-    logging.info("modified cdn_summary_details_image: {}".format(image))
-    shop_url = details_dict['shopUrl']
     logging.info("title: {}".format(title))
-    logging.info("image: {}".format(image))
-    image = check_image_availability(image, shop_url, product_id, headers)
-    return title, image
+    image = get_second_cdn_image(product_id)
+    if image_available(image):
+        return title, image
+    else:
+        image = details_dict['coverImage'].replace(' ', '%20')
+        logging.info("modified cdn_summary_details_image: {}".format(image))
+        shop_url = details_dict['shopUrl']
+        logging.info("image: {}".format(image))
+        image = check_image_availability(image, shop_url, headers)
+        return title, image
 
 
-def check_image_availability(image, shop_url, product_id, headers):
+def check_image_availability(image, shop_url, headers):
     backup_image = 'https://www.packtpub.com/media/wysiwyg/homepage_split_promo/freelearn_split_right.png'
     if image_available(image):
         return image
@@ -60,12 +64,9 @@ def check_image_availability(image, shop_url, product_id, headers):
         if match:
             shop_image = match.group(0)
             logging.info("shop_image: {}".format(shop_image))
-        else:
-            shop_image = get_second_cdn_image(product_id)
-        if image_available(shop_image):
-            return shop_image
-        else:
-            return backup_image
+            if image_available(shop_image):
+                return shop_image
+        return backup_image
 
 
 def get_second_cdn_image(product_id):
