@@ -1,25 +1,11 @@
 import datetime
 import json
-import logging
-import logging.handlers
 import requests
 import re
-
-LOG_FILENAME = 'learning_alerter.log'
-LOG_LEVEL = 'INFO'
-MAX_BYTES = 524288000
-BACKUP_COUNT = 3
-
-
-def setup_logging():
-    logging.basicConfig(level=LOG_LEVEL, filename=LOG_FILENAME, format='%(name)s - %(levelname)s - %(message)s')    
-    handler = logging.handlers.RotatingFileHandler(LOG_FILENAME, maxBytes=MAX_BYTES, backupCount=BACKUP_COUNT)
-    logging.getLogger('').addHandler(handler)
-    return logging.getLogger()
+import logging
 
 
 def main():
-    setup_logging()
     headers = {'user-agent': 'Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/68.0.3440.75 Mobile Safari/537.36'}
     product_id = get_product_id(headers)
     title, image = get_cdn_data(product_id, headers)
