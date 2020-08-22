@@ -1,9 +1,10 @@
-.idea/
-venv/
-__pycache__/
-.vscode/
 *.swp
 *.log
+.idea/
+.vscode/
 .deploy
 .pytest_cache/
+__pycache__/
+deploy*
 run.sh
+venv/
