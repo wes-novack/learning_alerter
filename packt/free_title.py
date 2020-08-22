@@ -6,12 +6,13 @@ import requests
 import re
 
 LOG_FILENAME = 'learning_alerter.log'
+LOG_LEVEL = 'INFO'
 MAX_BYTES = 524288000
 BACKUP_COUNT = 3
 
 
 def setup_logging():
-    logging.basicConfig(level=logging.INFO, filename=LOG_FILENAME, format='%(name)s - %(levelname)s - %(message)s')    
+    logging.basicConfig(level=LOG_LEVEL, filename=LOG_FILENAME, format='%(name)s - %(levelname)s - %(message)s')    
     handler = logging.handlers.RotatingFileHandler(LOG_FILENAME, maxBytes=MAX_BYTES, backupCount=BACKUP_COUNT)
     logging.getLogger('').addHandler(handler)
     return logging.getLogger()
@@ -66,6 +67,7 @@ def check_image_availability(image, shop_url, headers):
         url = 'https://www.packtpub.com'+shop_url
         logging.info(url)
         response = requests.get(url, headers)
+        logging.debug("response: {}".format(response.text))
         match = re.search('(?<=og\:image" content=").*(?=\")', str(response.text))
         shop_image = match.group(0)
         logging.info("shop_image: {}".format(shop_image))
