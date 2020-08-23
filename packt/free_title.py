@@ -20,7 +20,7 @@ def get_product_id(headers):
     logging.info("now: {} today {}".format(now, today))
     tomorrow = str(today + datetime.timedelta(days=1))
     url = 'https://services.packtpub.com/free-learning-v1/offers?dateFrom='+str(today)+'T00:00:00.000Z&dateTo='+tomorrow+'T00:00:00.000Z'
-    response = requests.get(url, headers)
+    response = requests.get(url, headers, timeout=7)
     logging.info("services.packtpub.com response: {}".format(response.text))
     product_id = get_id_from_json(response.text)
     return product_id
@@ -35,7 +35,7 @@ def get_id_from_json(response_text):
 
 def get_cdn_data(product_id, headers):
     url = 'https://static.packt-cdn.com/products/'+product_id+'/summary'
-    response = requests.get(url, headers)
+    response = requests.get(url, headers, timeout=7)
     logging.info("Packt-CDN response: {}".format(response.text))
     details_dict = json.loads(response.text)
     title = details_dict['title']
@@ -62,7 +62,7 @@ def check_image_availability(image, shop_url, headers):
     else:
         url = 'https://www.packtpub.com'+shop_url
         logging.info("shop_url: {}".format(url))
-        response = requests.get(url, headers)
+        response = requests.get(url, headers, timeout=7)
         logging.debug("response: {}".format(response.text))
         match = re.search(r'(?<=og\:image" content=").*(?=\")', str(response.text))
         logging.info("match: {}".format(match))
@@ -76,7 +76,7 @@ def check_image_availability(image, shop_url, headers):
 
 def image_available(image):
     try:
-        r = requests.head(image, timeout=5)
+        r = requests.head(image, timeout=7)
         if r.status_code == 200:
             return True
         else:
