@@ -37,7 +37,7 @@ def setup_logging(args):
     logging.basicConfig(level=args.loglevel, filename=args.logfile, format='%(name)s - %(levelname)s - %(message)s')    
     handler = logging.handlers.RotatingFileHandler(args.logfile, maxBytes=LOG_MAX_BYTES, backupCount=LOG_BACKUP_COUNT)
     logging.getLogger('root').addHandler(handler)
-    return logging.getLogger()
+    return logging.getLogger('root')
 
 
 if __name__ == '__main__':
