@@ -14,3 +14,15 @@ get_product_id_testdata = '{"data":[{"id":"55c161ec-289e-4e01-b65d-5afbec87bb7f"
 
 def test_get_id_from_json():
     assert packt.get_id_from_json(get_product_id_testdata) == '9781788476195'
+
+
+def test_image_available_backup_image_should_return_true():
+    assert packt.image_available(packt.BACKUP_IMAGE) == True
+
+
+def test_image_available_timeout_should_return_false():
+    assert packt.image_available("https://wesleytech.com/fakeimage.png") == False
+
+
+def test_image_available_no_protocol_should_return_false():
+    assert packt.image_available("wesleytech.com/fakeimage.png") == False
