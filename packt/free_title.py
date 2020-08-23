@@ -14,13 +14,6 @@ def main():
     return title, image
 
 
-def get_id_from_json(response_text):
-    product_dict = json.loads(response_text)
-    product_id = product_dict['data'][0]['productId']
-    logging.info("product_id: {}".format(product_id))
-    return product_id
-
-
 def get_product_id(headers):
     now = datetime.datetime.utcnow()
     today = now.date()
@@ -30,6 +23,13 @@ def get_product_id(headers):
     response = requests.get(url, headers)
     logging.info("services.packtpub.com response: {}".format(response.text))
     product_id = get_id_from_json(response.text)
+    return product_id
+
+
+def get_id_from_json(response_text):
+    product_dict = json.loads(response_text)
+    product_id = product_dict['data'][0]['productId']
+    logging.info("product_id: {}".format(product_id))
     return product_id
 
 
@@ -52,6 +52,10 @@ def get_cdn_data(product_id, headers):
         return title, image
 
 
+def get_second_cdn_image(product_id):
+    return "https://static.packt-cdn.com/products/"+product_id+"/cover/smaller"
+
+
 def check_image_availability(image, shop_url, headers):
     if image_available(image):
         return image
@@ -68,10 +72,6 @@ def check_image_availability(image, shop_url, headers):
             if image_available(shop_image):
                 return shop_image
         return BACKUP_IMAGE
-
-
-def get_second_cdn_image(product_id):
-    return "https://static.packt-cdn.com/products/"+product_id+"/cover/smaller"
 
 
 def image_available(image):
