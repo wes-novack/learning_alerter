@@ -1,0 +1,10 @@
+__pycache__
+.idea
+.pytest_cache
+.vscode
+tests
+.gitignore
+deploy.sh
+*.log
+README.md
+run.sh

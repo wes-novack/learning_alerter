@@ -10,3 +10,9 @@ Schedule execution similar to the following:
 From the root of the repository/project, run:
 
 `python -m pytest`
+
+## Build Docker image
+docker build -t learning_alerter .
+
+## Run in Docker
+docker run -it -e SLACKTOKEN='xoxp-your-secret-slack-token' -e SLACKCHANNEL='yourchannel' -e PACKT=true learning_alerter:latest
