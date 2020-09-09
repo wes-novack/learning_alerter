@@ -11,7 +11,7 @@ HEADERS = {'user-agent': 'Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N)
 
 def main():
     product_id = get_product_id()
-    title, image = get_cdn_data(product_id, HEADERS)
+    title, image = get_cdn_data(product_id)
     return title, image
 
 
