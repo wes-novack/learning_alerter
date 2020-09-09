@@ -12,7 +12,11 @@ From the root of the repository/project, run:
 `python -m pytest`
 
 ## Build Docker image
-docker build -t learning_alerter .
+From the root of the repository/project, run:
+
+`docker build -t learning_alerter .`
 
 ## Run in Docker
-docker run -it -e SLACKTOKEN='xoxp-your-secret-slack-token' -e SLACKCHANNEL='yourchannel' -e PACKT=true learning_alerter:latest
+After you've built the container image locally using docker build, then run:
+
+`docker run -it -e SLACKTOKEN='xoxp-your-secret-slack-token' -e SLACKCHANNEL='yourchannel' -e PACKT=true learning_alerter:latest`
