@@ -24,9 +24,9 @@ def main():
 
 def get_args():
     config = configargparse.ArgParser()
-    config.add('--slacktoken')
-    config.add('--slackchannel')
-    config.add('--packt', action='store_true')
+    config.add('--slacktoken', env_var='SLACKTOKEN')
+    config.add('--slackchannel', env_var='SLACKCHANNEL')
+    config.add('--packt', env_var='PACKT', action='store_true')
     config.add('--loglevel', default='INFO')
     config.add('--logfile', default='learning_alerter.log')
     args = config.parse_args()
