@@ -1,6 +1,13 @@
 # learning_alerter
 Web scraper that can run on a schedule to find and post about free learning content. Requires python >=3.6 
 
+## Prepare a non-containerized environment
+```
+virtualenv venv -p python3
+. venv/bin/activate
+pip install -r requirements.txt
+```
+
 ## Run the program
 Schedule execution similar to the following:
 
