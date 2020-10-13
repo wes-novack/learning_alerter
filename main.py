@@ -1,6 +1,6 @@
 import configargparse
 import packt.free_title
-import slack.post
+import slack.post_with_token
 import logging
 import logging.handlers
 
@@ -16,7 +16,7 @@ def main():
         if args.slacktoken and args.slackchannel:
             token = args.slacktoken
             channel = args.slackchannel
-            slack.post.main(token, image, title, channel)
+            slack.post_with_token.main(token, image, title, channel)
         else:
             print("No args.slacktoken or args.slackchannel found.")
             print("Title is: {}\nImage URL is: {}".format(title, image))
