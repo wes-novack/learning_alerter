@@ -1,6 +1,7 @@
 import configargparse
 import packt.free_title
 import slack.post_with_token
+import slack.post_with_webhook
 import logging
 import logging.handlers
 
@@ -17,8 +18,11 @@ def main():
             token = args.slacktoken
             channel = args.slackchannel
             slack.post_with_token.main(token, image, title, channel)
+        elif args.slackwebhook:
+            webhook = args.slackwebhook
+            slack.post_with_webhook.post_to_webhook(webhook, image, title)
         else:
-            print("No args.slacktoken or args.slackchannel found.")
+            print("Couldn't find (args.slacktoken AND args.slackchannel) or args.slackwebhook.")
             print("Title is: {}\nImage URL is: {}".format(title, image))
 
 
@@ -29,6 +33,7 @@ def get_args():
     config.add('--packt', env_var='PACKT', action='store_true')
     config.add('--loglevel', default='INFO')
     config.add('--logfile', default='learning_alerter.log')
+    config.add('--slackwebhook', env_var='SLACKWEBHOOK')
     args = config.parse_args()
     return args
 
