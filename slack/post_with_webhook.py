@@ -35,5 +35,5 @@ def post_to_webhook(webhook, image, title):
         ]
     }
     r = requests.post(webhook, headers=headers, json=data)
-    logging.info("slack/post_with_webhook.py")
+    logging.info("post_to_webhook function")
     logging.info(f"r.status_code: {r.status_code}")
