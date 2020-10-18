@@ -9,7 +9,15 @@ pip install -r requirements.txt
 ```
 
 ## Run the program
-Schedule execution similar to the following:
+Schedule execution similar to the following examples.
+
+To use a Slack webhook:
+
+`python main.py --packt --slackwebhook 'https://hooks.slack.com/services/T00000000/B00000000/XXXXXXXXXXXXXXXXXXXXXXXX'`
+
+Note: Slack now requires you to use the webhook configuration in order to set the display name, the avatar/icon, and the targeted channel. See <the instructions here on creating a Slack webhook|https://api.slack.com/messaging/webhooks>.
+
+To use a Slack legacy Slack API token (no deprecated by Slack):
 
 `python main.py --packt --slacktoken 'xoxp-your-super-secret-slack-token' --slackchannel '#yourchannel'`
 
@@ -26,4 +34,6 @@ From the root of the repository/project, run:
 ## Run in Docker
 After you've built the container image locally using docker build, then run:
 
-`docker run -it -e SLACKTOKEN='xoxp-your-secret-slack-token' -e SLACKCHANNEL='yourchannel' -e PACKT=true learning_alerter:latest`
+`docker run -it -e SLACKWEBHOOK='https://hooks.slack.com/services/T00000000/B00000000/XXXXXXXXXXXXXXXXXXXXXXXX' -e PACKT=true learning_alerter:latest`
+
+Note: if running from a cron, omit the `-it` flags, as interactive (-i) and tty (-t) are not available in cron.
