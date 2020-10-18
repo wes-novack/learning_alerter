@@ -1,9 +1,10 @@
+import logging
+import logging.handlers
 import configargparse
 import packt.free_title
 import slack.post_with_token
 import slack.post_with_webhook
-import logging
-import logging.handlers
+
 
 LOG_MAX_BYTES = 524288000
 LOG_BACKUP_COUNT = 3
