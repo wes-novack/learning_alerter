@@ -1,6 +1,8 @@
 import logging
 import logging.handlers
+
 import configargparse
+
 import packt.free_title
 import slack.post_with_token
 import slack.post_with_webhook

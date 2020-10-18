@@ -1,8 +1,9 @@
 import datetime
 import json
-import requests
-import re
 import logging
+import re
+
+import requests
 
 URL_ROOT = 'https://services.packtpub.com/free-learning-v1/offers?dateFrom='
 BACKUP_IMAGE = 'https://www.packtpub.com/media/wysiwyg/homepage_split_promo/freelearn_split_right.png'

@@ -1,5 +1,6 @@
-import requests
 import logging
+
+import requests
 
 
 def post_to_webhook(webhook, image, title):
