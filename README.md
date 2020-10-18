@@ -17,7 +17,7 @@ To use a Slack webhook:
 
 Note: Slack now requires you to use the webhook configuration in order to set the display name, the avatar/icon, and the targeted channel. See [the instructions here on creating a Slack webhook](https://api.slack.com/messaging/webhooks).
 
-To use a Slack legacy Slack API token (no deprecated by Slack):
+To use a Slack legacy Slack API token (now deprecated by Slack):
 
 `python main.py --packt --slacktoken 'xoxp-your-super-secret-slack-token' --slackchannel '#yourchannel'`
 
