@@ -46,7 +46,9 @@ def get_cdn_data(product_id):
     if not image_available(image):
         image = get_secondary_cdn_image(details_dict)
         if not image_available(image):
-            image = get_backup_image(details_dict)
+            image = get_shop_image(details_dict)
+            if not image_available(image):
+                image = BACKUP_IMAGE
     return title, image
 
 
@@ -62,7 +64,7 @@ def get_secondary_cdn_image(details_dict):
     return image
 
 
-def get_backup_image(details_dict):
+def get_shop_image(details_dict):
     shop_url = details_dict['shopUrl']
     url = 'https://www.packtpub.com'+shop_url
     logging.info("shop_url: {}".format(url))
@@ -73,9 +75,8 @@ def get_backup_image(details_dict):
     if match:
         shop_image = match.group(0)
         logging.info("shop_image: {}".format(shop_image))
-        if image_available(shop_image):
-            return shop_image
-    return BACKUP_IMAGE
+        return shop_image
+    return None
 
 
 def check_image_availability(image):
