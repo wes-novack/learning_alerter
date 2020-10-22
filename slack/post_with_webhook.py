@@ -3,7 +3,7 @@ import logging
 import requests
 
 
-def post_to_webhook(webhook, image, title):
+def main(webhook, image, title):
     headers = {'Content-type': 'application/json'}
     data = {
         "text": "Free title of the day: "+title,
