@@ -4,8 +4,8 @@ import logging.handlers
 import configargparse
 
 import packt.free_title
-import slack.post_with_token
-import slack.post_with_webhook
+from slack import post_with_token
+from slack import post_with_webhook
 
 LOG_MAX_BYTES = 524288000
 LOG_BACKUP_COUNT = 3
@@ -19,10 +19,10 @@ def main():
         if args.slacktoken and args.slackchannel:
             token = args.slacktoken
             channel = args.slackchannel
-            slack.post_with_token.main(token, image, title, channel)
+            post_with_token.main(token, image, title, channel)
         elif args.slackwebhook:
             webhook = args.slackwebhook
-            slack.post_with_webhook.post_to_webhook(webhook, image, title)
+            post_with_webhook.main(webhook, image, title)
         else:
             print("Couldn't find (args.slacktoken AND args.slackchannel) or args.slackwebhook.")
             print("Title is: {}\nImage URL is: {}".format(title, image))
