@@ -7,7 +7,7 @@ import packt.free_title
 from slack import post_with_token
 from slack import post_with_webhook
 
-LOG_MAX_BYTES = 524288000
+LOG_MAX_BYTES = 524_288_000
 LOG_BACKUP_COUNT = 3
 
 
