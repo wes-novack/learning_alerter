@@ -18,10 +18,10 @@ def main():
 
 def get_product_id():
     now = datetime.datetime.utcnow()
-    today = now.date()
+    today = str(now.date())
     logging.info("now: {} today {}".format(now, today))
     tomorrow = str(today + datetime.timedelta(days=1))
-    url = URL_ROOT+str(today)+'T00:00:00.000Z&dateTo='+tomorrow+'T00:00:00.000Z'
+    url = URL_ROOT+today+'T00:00:00.000Z&dateTo='+tomorrow+'T00:00:00.000Z'
     response = requests.get(url, HEADERS, timeout=7)
     logging.info("services.packtpub.com response: {}".format(response.text))
     product_id = get_id_from_json(response.text)
