@@ -79,13 +79,6 @@ def get_shop_image(details_dict):
     return None
 
 
-def check_image_availability(image):
-    if image_available(image):
-        return image
-    else:
-        return None
-
-
 def image_available(image):
     try:
         r = requests.head(image, timeout=7)
