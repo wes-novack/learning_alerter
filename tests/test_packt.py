@@ -43,7 +43,7 @@ packt_cdn_response_testdata = '{"title":"Universal React with Next.js - The Ulti
     "readUrl":"/video/web_development/9781839210792","coverImage":\
     "https://static.packt-cdn.com/products/9781839210792/cover/9781839210792 original.png"\
     ,"inStore":true,"inSubs":true}'
-dummy_cdn_testdata = '{"title":"Bogus Course Title","productId":"2221788123444",\
+packt_cdn_response_dummydata = '{"title":"Bogus Course Title","productId":"2221788123444",\
     "isbn10":"2221788123444","isbns":{"video":"2221788123444"},\
     "shopUrl":"/web-development/bogus-course-title-the-ultimate-guide-video"}'
 
@@ -83,6 +83,6 @@ def test_integration_image_available_timeout_should_return_false():
 
 
 def test_integration_get_shop_image_when_shopurl_doesnt_match():
-    details_dict = json.loads(dummy_cdn_testdata)
+    details_dict = json.loads(packt_cdn_response_dummydata)
     image = packt.get_shop_image(details_dict)
     assert image == None
