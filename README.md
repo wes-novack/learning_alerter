@@ -1,5 +1,5 @@
 # learning_alerter
-Web scraper that can run on a schedule to find and post about free learning content. Requires python >=3.6 
+API query tool & web scraper that can run on a schedule to find and post about free learning content. Requires python >=3.6 
 
 ## Prepare a non-containerized environment
 ```
