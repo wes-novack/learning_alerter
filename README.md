@@ -1,6 +1,9 @@
 # learning_alerter
 API query tool & web scraper that can run on a schedule to find and post about free learning content. Requires python >=3.6 
 
+## Conference talk
+Watch the presentation here: https://www.youtube.com/watch?v=iJt9chRniLE 
+
 ## Prepare a non-containerized environment
 ```
 virtualenv venv -p python3
