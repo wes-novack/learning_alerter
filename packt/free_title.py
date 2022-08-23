@@ -2,6 +2,7 @@ import datetime
 import json
 import logging
 import re
+import sys
 
 import requests
 
@@ -22,6 +23,7 @@ def get_product_id():
     logging.info("now: {} today {}".format(now, today))
     tomorrow = today + datetime.timedelta(days=1)
     url = URL_ROOT+str(today)+'T00:00:00.000Z&dateTo='+str(tomorrow)+'T00:00:00.000Z'
+    logging.info(f"url: {url}")
     response = requests.get(url, HEADERS, timeout=7)
     logging.info("services.packtpub.com response: {}".format(response.text))
     product_id = get_id_from_json(response.text)
@@ -30,8 +32,14 @@ def get_product_id():
 
 def get_id_from_json(response_text):
     product_dict = json.loads(response_text)
-    product_id = product_dict['data'][0]['productId']
-    logging.info("product_id: {}".format(product_id))
+
+    try:
+        product_id = product_dict['data'][0]['productId']
+        logging.info("product_id: {}".format(product_id))
+    except IndexError:
+        logging.error("Unable to retrieve product_id, API response empty.")
+        sys.exit("Unable to retrieve product_id, API response empty.")
+
     return product_id
 
 
@@ -66,7 +74,9 @@ def get_secondary_cdn_image(details_dict):
 
 def get_shop_image(details_dict):
     shop_url = details_dict['shopUrl']
+    #product_id = details_dict['productId']
     url = 'https://www.packtpub.com'+shop_url
+    #url = 'https://www.packtpub.com/product'+shop_url
     logging.info("shop_url: {}".format(url))
     response = requests.get(url, HEADERS, timeout=7)
     logging.debug("response: {}".format(response.text))
