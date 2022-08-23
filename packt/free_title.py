@@ -5,16 +5,34 @@ import re
 import sys
 
 import requests
+from bs4 import BeautifulSoup 
 
-URL_ROOT = 'https://services.packtpub.com/free-learning-v1/offers?dateFrom='
 BACKUP_IMAGE = 'https://www.packtpub.com/media/wysiwyg/homepage_split_promo/freelearn_split_right.png'
+FREE_URL = 'https://www.packtpub.com/free-learning'
 HEADERS = {'user-agent': 'Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/68.0.3440.75 Mobile Safari/537.36'}
+URL_ROOT = 'https://services.packtpub.com/free-learning-v1/offers?dateFrom='
 
 
 def main():
-    product_id = get_product_id()
-    title, image = get_cdn_data(product_id)
+    #switching to get_free_title_info()
+    #product_id = get_product_id()
+    #title, image = get_cdn_data(product_id)
+    title, image = get_free_title_info()
     return title, image
+
+
+def get_free_title_info():
+    response = requests.get(FREE_URL, HEADERS, timeout=7)
+    soup = BeautifulSoup(response.content, 'html.parser')
+    images = soup.findAll('img')
+    for image in images:
+        if 'product-image' in image['class']:
+            free_title_image = image['src']
+            free_title_name = image['alt'].replace("Free eBook - ","")
+            logging.info(f"free_title_image: {free_title_image}")
+            logging.info(f"free_title_name: {free_title_name}")
+            break
+    return free_title_name, free_title_image
 
 
 def get_product_id():
@@ -74,9 +92,7 @@ def get_secondary_cdn_image(details_dict):
 
 def get_shop_image(details_dict):
     shop_url = details_dict['shopUrl']
-    #product_id = details_dict['productId']
     url = 'https://www.packtpub.com'+shop_url
-    #url = 'https://www.packtpub.com/product'+shop_url
     logging.info("shop_url: {}".format(url))
     response = requests.get(url, HEADERS, timeout=7)
     logging.debug("response: {}".format(response.text))
