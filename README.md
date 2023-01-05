@@ -2,7 +2,7 @@
 API query tool & web scraper that can run on a schedule to find and post about free learning content. Requires python >=3.6 
 
 ## Conference talk
-Watch the presentation here: https://www.youtube.com/watch?v=iJt9chRniLE 
+Watch the presentation "Scrape the Web for Fun & Nonprofit with Python" here: https://www.youtube.com/watch?v=iJt9chRniLE 
 
 ## Prepare a non-containerized environment
 ```
