@@ -44,3 +44,4 @@ After you've built the container image locally using docker build, then run:
 
 Note: if running from a cron, omit the `-it` flags, as interactive (-i) and tty (-t) are not available in cron.
 
+.
