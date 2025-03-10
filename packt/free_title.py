@@ -24,7 +24,7 @@ def main():
 def get_free_title_info():
     response = requests.get(FREE_URL, HEADERS, timeout=7)
     soup = BeautifulSoup(response.content, 'html.parser')
-    free_title_image_object = soup.find_all(class="product-image")
+    free_title_image_object = soup.find(class_="product-image")
     free_title_image = free_title_image_object['src']
     free_title_name = free_title_image_object['alt'].replace("Free eBook - ","")
     return free_title_name, free_title_image
