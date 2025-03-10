@@ -26,12 +26,13 @@ def get_free_title_info():
     soup = BeautifulSoup(response.content, 'html.parser')
     images = soup.findAll('img')
     for image in images:
-        if 'product-image' in image['class']:
-            free_title_image = image['src']
-            free_title_name = image['alt'].replace("Free eBook - ","")
-            logging.info(f"free_title_image: {free_title_image}")
-            logging.info(f"free_title_name: {free_title_name}")
-            break
+        if 'class' in image:
+            if 'product-image' in image['class']:
+                free_title_image = image['src']
+                free_title_name = image['alt'].replace("Free eBook - ","")
+                logging.info(f"free_title_image: {free_title_image}")
+                logging.info(f"free_title_name: {free_title_name}")
+                break
     return free_title_name, free_title_image
 
 
