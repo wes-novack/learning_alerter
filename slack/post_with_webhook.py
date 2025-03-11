@@ -3,7 +3,7 @@ import logging
 import requests
 
 
-def main(webhook, image, title):
+def main(webhook, image, title, dryrun):
     headers = {'Content-type': 'application/json'}
     data = {
         "text": "Free title of the day: "+title,
@@ -35,6 +35,10 @@ def main(webhook, image, title):
             }
         ]
     }
-    r = requests.post(webhook, headers=headers, json=data)
-    logging.info("post_to_webhook function")
-    logging.info(f"r.status_code: {r.status_code}")
+    if dryrun:
+        print("DRYRUN")
+        print(f"Would have run: requests.post({webhook}, headers={headers}, json={data})")
+    else:
+        r = requests.post(webhook, headers=headers, json=data)
+        logging.info("post_with_webhook called")
+        logging.info(f"r.status_code: {r.status_code}")
